@@ -12,10 +12,13 @@ kubectl apply -f srcs/metallb/config.yaml
 # Build images
 eval $(minikube docker-env)
 docker build -t my-nginx srcs/nginx
+docker build -t my-ftp srcs/ftp
 
 # Load configs
 kubectl apply -f srcs/nginx/nginx_deployment.yaml
 kubectl apply -f srcs/nginx/nginx_service.yaml
+kubectl apply -f srcs/ftp/ftp_deployment.yaml
+kubectl apply -f srcs/ftp/ftp_service.yaml
 
 # Activate dashboard
 #minikube dashboard
