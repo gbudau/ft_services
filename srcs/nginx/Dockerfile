@@ -1,6 +1,8 @@
 # Set alpine 3.11 as base image
 FROM alpine:3.11
 
+MAINTAINER gbudau
+
 # Install packages
 RUN apk add --update --no-cache nginx openssl openssh
 
