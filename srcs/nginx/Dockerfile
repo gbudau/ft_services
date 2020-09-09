@@ -1,5 +1,5 @@
-# Set alpine 3.11 as base image
-FROM alpine:3.11
+# Set alpine 3.12 as base image
+FROM alpine:3.12
 
 MAINTAINER gbudau
 

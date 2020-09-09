@@ -1,5 +1,7 @@
 FROM alpine:3.12
 
+MAINTAINER gbudau
+
 RUN apk add --update --no-cache vsftpd
 
 COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
