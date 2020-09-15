@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Start minikube
 #minikube start --driver=virtualbox
@@ -13,7 +13,6 @@ kubectl apply -f srcs/metallb/config.yaml
 eval $(minikube docker-env)
 docker build -t my-nginx srcs/nginx
 docker build -t my-ftp srcs/ftp
-eval $(minikube docker-env -u)
 
 # Load configs
 kubectl apply -f srcs/nginx/nginx.yaml

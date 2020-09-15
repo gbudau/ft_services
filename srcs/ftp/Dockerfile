@@ -10,6 +10,6 @@ RUN mkdir /srv/ftp \
  && chown nobody:nogroup /srv/ftp \
  && echo "anon" >  /srv/ftp/anon.txt
 
-EXPOSE 20
+EXPOSE 21 30020 30021
 
 CMD /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
