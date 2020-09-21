@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-MAINTAINER gbudau
+LABEL maintainer="gbudau"
 
 RUN addgroup -S mysql && adduser -S -G mysql mysql
 RUN apk add --update --no-cache  mysql mysql-client

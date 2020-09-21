@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-MAINTAINER gbudau
+LABEL maintainer="gbudau"
 
 RUN apk add --update --no-cache vsftpd
 

@@ -1,7 +1,7 @@
 # Set alpine 3.12 as base image
 FROM alpine:3.12
 
-MAINTAINER gbudau
+LABEL maintainer="gbudau"
 
 # Install packages
 RUN apk add --update --no-cache nginx openssl openssh
