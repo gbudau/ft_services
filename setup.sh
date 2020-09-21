@@ -16,9 +16,7 @@ docker build -t my-ftp srcs/ftp
 docker build -t my-mysql srcs/mysql
 
 # Load configs
-kubectl apply -f srcs/nginx/nginx.yaml
-kubectl apply -f srcs/ftp/ftp.yaml
-kubectl apply -f srcs/mysql/mysql.yaml
+kubectl apply -k srcs/
 
 # Activate dashboard
 #minikube dashboard

@@ -1,0 +1,11 @@
+# kustomization.yml
+
+resources:
+  - nginx/nginx.yaml
+  - ftp/ftp.yaml
+  - mysql/mysql.yaml
+
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=YOUR_PASSWORD

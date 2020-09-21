@@ -10,6 +10,7 @@ spec:
   selector:
     app: mysql
     tier: mysql
+  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -27,7 +28,7 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: mysql-deployment
+  name: mysql
   labels:
     app: mysql
 spec:
@@ -44,8 +45,14 @@ spec:
         tier: mysql
     spec:
       containers:
-      - name: mysql
-        image: my-mysql
+      - image: my-mysql
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
         imagePullPolicy: Never
         ports:
         - containerPort: 3306
