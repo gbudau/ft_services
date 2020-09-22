@@ -13,6 +13,7 @@ EXPOSE 3306
 
 
 COPY my.cnf /etc/my.cnf
+COPY create_tables.sql .
 COPY startup.sh /startup.sh
 RUN chmod u+x /startup.sh
 

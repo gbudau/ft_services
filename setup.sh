@@ -14,6 +14,7 @@ eval $(minikube docker-env)
 docker build -t my-nginx srcs/nginx
 docker build -t my-ftp srcs/ftp
 docker build -t my-mysql srcs/mysql
+docker build -t my-phpmyadmin srcs/phpmyadmin
 
 # Load configs
 kubectl apply -k srcs/

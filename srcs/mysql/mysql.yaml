@@ -53,6 +53,21 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-user
+              key: dbuser
+        - name: DATABASE_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: dbpass
+        - name: PMA_USER_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pma-pass
+              key: pmapassword
         imagePullPolicy: Never
         ports:
         - containerPort: 3306

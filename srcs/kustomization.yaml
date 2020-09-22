@@ -4,8 +4,18 @@ resources:
   - nginx/nginx.yaml
   - ftp/ftp.yaml
   - mysql/mysql.yaml
+  - phpmyadmin/phpmyadmin.yaml
 
 secretGenerator:
 - name: mysql-pass
   literals:
-  - password=YOUR_PASSWORD
+  - password=ROOT_PASSWORD
+- name: db-user
+  literals:
+  - dbuser=DB_USER
+- name: db-pass
+  literals:
+  - dbpass=DB_PASS
+- name: pma-pass
+  literals:
+  - pmapassword=PMA_PASS

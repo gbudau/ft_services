@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5000
+      protocol: TCP
+      name: phpmyadmin
+  selector:
+    app: phpmyadmin
+    tier: phpmyadmin
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  selector:
+    matchLabels:
+      app: phpmyadmin
+      tier: phpmyadmin
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+        tier: phpmyadmin
+    spec:
+      containers:
+      - image: my-phpmyadmin
+        name: phpmyadmin
+        env:
+        - name: PMA_USER_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pma-pass
+              key: pmapassword
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+          name: phpmyadmin

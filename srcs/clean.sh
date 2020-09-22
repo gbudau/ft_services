@@ -11,6 +11,7 @@ kubectl delete -k "$DIR"
 docker rmi -f my-nginx:latest
 docker rmi -f my-ftp:latest
 docker rmi -f my-mysql:latest
+docker rmi -f my-phpmyadmin:latest
 docker rmi -f alpine:3.12
 
 #minikube stop

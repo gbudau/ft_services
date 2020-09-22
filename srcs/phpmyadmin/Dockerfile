@@ -14,10 +14,11 @@ ENV PHP_DISPLAY_ERRORS="On"
 ENV PHP_DISPLAY_STARTUP_ERRORS="On"
 ENV PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR"
 ENV PHP_CGI_FIX_PATHINFO="0"
+ENV PHPMYADMIN_VERSION="5.0.2"
 
 # Install packages
 RUN apk add --update --no-cache nginx \
- openrc \
+ openssl \
  php7-fpm \
  php7-mcrypt \
  php7-soap \
@@ -44,16 +45,31 @@ RUN apk add --update --no-cache nginx \
  php7-iconv \
  php7-pdo_dblib \
  php7-curl \
- php7-ctype
- 
+ php7-ctype \
+ php7-session \
+ php7-mbstring
 
+
+# Create www user and group, change permission
 RUN adduser -D -g 'www' www \
  && mkdir /www \
  && chown -R www:www /var/lib/nginx \
  && chown -R www:www /www
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY index.php /www/index.php
+
+# Install phpmyadmin
+RUN wget -q https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-english.tar.gz -P tmp \
+ && tar xzf tmp/phpMyAdmin-${PHPMYADMIN_VERSION}-english.tar.gz -C tmp \
+ && mv tmp/phpMyAdmin-${PHPMYADMIN_VERSION}-english/ /usr/share/phpmyadmin \
+ && mkdir -p /var/lib/phpmyadmin/tmp \
+ && chown -R www:www /var/lib/phpmyadmin \
+ && randomBlowfishSecret=$(openssl rand -base64 32) \
+ && sed -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '$randomBlowfishSecret'|" -e '/controluser/,/End/ s/^\/\///g' /usr/share/phpmyadmin/config.sample.inc.php > /usr/share/phpmyadmin/config.inc.php \
+ && sed -i "s/localhost/mysql/" /usr/share/phpmyadmin/config.inc.php \
+ && echo "\$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';" >> /usr/share/phpmyadmin/config.inc.php \
+ && ln -s /usr/share/phpmyadmin/ /www/ \
+ && rm -rf tmp/*
+ 
 
 RUN sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/php7/php-fpm.d/www.conf \
  && sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" /etc/php7/php-fpm.d/www.conf \
@@ -71,7 +87,12 @@ RUN sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/
  && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /etc/php7/php.ini
 
 
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY startup.sh /startup.sh
+RUN chmod u+x /startup.sh
+
+
 # Ports that needs to be exposed
 EXPOSE 5000
 
-CMD /usr/sbin/php-fpm7 && nginx -g 'daemon off;'
+CMD ["/startup.sh"]
