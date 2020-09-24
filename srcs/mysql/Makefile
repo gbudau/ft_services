@@ -1,18 +1,18 @@
 all:
-	docker build -t my-mysql .
-	docker run --name=test-mysql -e MYSQL_ROOT_PASSWORD=password -e DATABASE_USER=dbuser -e DATABASE_USER_PASSWORD=dbuserpassword -e PMA_USER_DATABASE_PASSWORD=pmapassword -p 3306:3306 -d my-mysql:latest
+	docker build -t mysql-test .
+	docker run --name=mysql -e MYSQL_ROOT_PASSWORD=password -e DATABASE_USER=dbuser -e DATABASE_USER_PASSWORD=dbuserpassword -e PMA_USER_DATABASE_PASSWORD=pmapassword -p 3306:3306 -d mysql-test:latest
 
 clean:
-	docker stop test-mysql
-	docker rm test-mysql
-	docker rmi my-mysql:latest
+	docker stop mysql
+	docker rm mysql
+	docker rmi mysql-test:latest
 
 exec:
-	docker exec -u 0 -it test-mysql /bin/sh
+	docker exec -u 0 -it mysql /bin/sh
 
 show:
 	docker ps -a
 	docker images -a
 
 logs:
-	docker logs test-mysql
+	docker logs mysql

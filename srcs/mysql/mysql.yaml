@@ -53,11 +53,6 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password
-        - name: DATABASE_USER
-          valueFrom:
-            secretKeyRef:
-              name: db-user
-              key: dbuser
         - name: DATABASE_USER_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -68,6 +63,11 @@ spec:
             secretKeyRef:
               name: pma-pass
               key: pmapassword
+        - name: WORDPRESS_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-database-password
+              key: wpdbpass
         imagePullPolicy: Never
         ports:
         - containerPort: 3306

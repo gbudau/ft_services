@@ -12,7 +12,7 @@ docker rmi -f my-nginx:latest
 docker rmi -f my-ftp:latest
 docker rmi -f my-mysql:latest
 docker rmi -f my-phpmyadmin:latest
-docker rmi -f alpine:3.12
+docker rmi -f my-wordpress:latest
 
 #minikube stop
 #minikube delete

@@ -1,0 +1,117 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5050
+      protocol: TCP
+      name: wordpress
+  selector:
+    app: wordpress
+    tier: wordpress
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: wordpress
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: wordpress
+    spec:
+      initContainers:
+      - name: init-mysql
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup mysql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mysql; sleep 2; done"]
+      containers:
+      - image: my-wordpress
+        name: wordpress
+        env:
+        - name: WORDPRESS_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-database-password
+              key: wpdbpass
+        - name: WORDPRESS_URL
+          value: http://192.168.99.243:5050
+        - name: WORDPRESS_SITE_TITLE
+          value: wordpress
+        - name: WORDPRESS_ADMIN
+          value: admin
+        - name: WORDPRESS_ADMIN_EMAIL
+          value: admin@example.com
+        - name: WORDPRESS_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-admin-password
+              key: wpadminpass
+        - name: WORDPRESS_EDITOR
+          value: editor
+        - name: WORDPRESS_EDITOR_EMAIL
+          value: editor@example.com
+        - name: WORDPRESS_EDITOR_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-editor-password
+              key: wpeditorpass
+        - name: WORDPRESS_AUTHOR
+          value: author
+        - name: WORDPRESS_AUTHOR_EMAIL
+          value: author@example.com
+        - name: WORDPRESS_AUTHOR_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-author-password
+              key: wpauthorpass
+        - name: WORDPRESS_CONTRIBUTOR
+          value: contributor
+        - name: WORDPRESS_CONTRIBUTOR_EMAIL
+          value: contributor@example.com
+        - name: WORDPRESS_CONTRIBUTOR_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-contributor-password
+              key: wpcontributorpass
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5050
+          name: wordpress
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: "/www/wp-content"
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wp-pv-claim

@@ -15,6 +15,7 @@ docker build -t my-nginx srcs/nginx
 docker build -t my-ftp srcs/ftp
 docker build -t my-mysql srcs/mysql
 docker build -t my-phpmyadmin srcs/phpmyadmin
+docker build -t my-wordpress srcs/wordpress
 
 # Load configs
 kubectl apply -k srcs/

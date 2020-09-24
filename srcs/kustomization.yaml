@@ -1,21 +1,34 @@
-# kustomization.yml
+# kustomization.yaml
 
 resources:
   - nginx/nginx.yaml
   - ftp/ftp.yaml
   - mysql/mysql.yaml
   - phpmyadmin/phpmyadmin.yaml
+  - wordpress/wordpress.yaml
 
 secretGenerator:
 - name: mysql-pass
   literals:
   - password=ROOT_PASSWORD
-- name: db-user
-  literals:
-  - dbuser=DB_USER
 - name: db-pass
   literals:
   - dbpass=DB_PASS
 - name: pma-pass
   literals:
   - pmapassword=PMA_PASS
+- name: wordpress-database-password
+  literals:
+  - wpdbpass=WP_PASS
+- name: wordpress-admin-password
+  literals:
+  - wpadminpass=WPADMIN_PASS
+- name: wordpress-editor-password
+  literals:
+  - wpeditorpass=WPEDITOR_PASS
+- name: wordpress-author-password
+  literals:
+  - wpauthorpass=WPAUTHOR_PASS
+- name: wordpress-contributor-password
+  literals:
+  - wpcontributorpass=WPCONTRIBUTOR_PASS
