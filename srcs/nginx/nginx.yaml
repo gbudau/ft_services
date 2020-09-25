@@ -41,3 +41,9 @@ spec:
         - containerPort: 443
         - containerPort: 22
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command:
+            - /healthcheck.sh
+          initialDelaySeconds: 15
+          periodSeconds: 5

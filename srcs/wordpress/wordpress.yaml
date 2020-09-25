@@ -6,6 +6,7 @@ metadata:
     app: wordpress
 spec:
   type: LoadBalancer
+  loadBalancerIP: 192.168.99.243
   ports:
     - port: 5050
       protocol: TCP
@@ -53,6 +54,12 @@ spec:
       containers:
       - image: my-wordpress
         name: wordpress
+        livenessProbe:
+          exec:
+            command:
+            - /healthcheck.sh
+          initialDelaySeconds: 15
+          periodSeconds: 5
         env:
         - name: WORDPRESS_DATABASE_PASSWORD
           valueFrom:

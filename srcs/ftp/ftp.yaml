@@ -4,6 +4,7 @@ metadata:
   name: ftp
 spec:
   type: LoadBalancer
+  loadBalancerIP: 192.168.99.241
   ports:
   - port: 21
     protocol: TCP

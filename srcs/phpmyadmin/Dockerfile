@@ -89,8 +89,9 @@ RUN sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY startup.sh /startup.sh
-RUN chmod u+x /startup.sh
-
+COPY healthcheck.sh /healthcheck.sh
+RUN chmod u+x /startup.sh \
+ && chmod u+x /healthcheck.sh
 
 # Ports that needs to be exposed
 EXPOSE 5000

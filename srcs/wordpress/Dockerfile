@@ -100,7 +100,9 @@ RUN sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/
 # Copy and set permission for config files and starting script
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY startup.sh /startup.sh
-RUN chmod u+x /startup.sh
+COPY healthcheck.sh /healthcheck.sh
+RUN chmod u+x /startup.sh \
+ && chmod u+x /healthcheck.sh
 
 
 # Ports that needs to be exposed
