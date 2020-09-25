@@ -17,6 +17,7 @@ ENV PHP_CGI_FIX_PATHINFO="0"
 
 # Install packages
 RUN apk add --update --no-cache nginx \
+ sudo \
  openssl \
  coreutils \
  mysql-client \
