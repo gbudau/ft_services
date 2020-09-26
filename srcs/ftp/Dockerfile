@@ -2,14 +2,17 @@ FROM alpine:3.12
 
 LABEL maintainer="gbudau"
 
-RUN apk add --update --no-cache vsftpd
+RUN apk add --update --no-cache vsftpd openssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt -subj '/CN=127.0.0.1'
+
+RUN mkdir -p /vsftpd/
+RUN chown -R ftp:ftp /vsftpd/
 
 COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
+COPY startup.sh /startup.sh
+RUN chmod u+x /startup.sh
 
-RUN mkdir /srv/ftp \
- && chown nobody:nogroup /srv/ftp \
- && echo "anon" >  /srv/ftp/anon.txt
+EXPOSE 21 30020-30039
 
-EXPOSE 21 30020 30021
-
-CMD /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+VOLUME ["/vsftpd"]
+CMD ["/startup.sh"]

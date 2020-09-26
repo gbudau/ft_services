@@ -15,8 +15,45 @@ spec:
   - port: 30021
     protocol: TCP
     name: ftp-passive2
+  - port: 30022
+    protocol: TCP
+    name: ftp-passive3
+  - port: 30023
+    protocol: TCP
+    name: ftp-passive4
+  - port: 30024
+    protocol: TCP
+    name: ftp-passive5
+  - port: 30025
+    protocol: TCP
+    name: ftp-passive6
+  - port: 30026
+    protocol: TCP
+    name: ftp-passive7
+  - port: 30027
+    protocol: TCP
+    name: ftp-passive8
+  - port: 30028
+    protocol: TCP
+    name: ftp-passive9
+  - port: 30029
+    protocol: TCP
+    name: ftp-passive10
   selector:
       app: ftp
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ftp-pv-claim
+  labels:
+    app: ftp
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -41,4 +78,29 @@ spec:
         - containerPort: 21
         - containerPort: 30020
         - containerPort: 30021
+        - containerPort: 30022
+        - containerPort: 30023
+        - containerPort: 30024
+        - containerPort: 30025
+        - containerPort: 30026
+        - containerPort: 30027
+        - containerPort: 30028
+        - containerPort: 30029
         imagePullPolicy: Never
+        env:
+        - name: FTP_USER
+          value: alpineftp
+        - name: FTP_EXTERNAL_IP
+          value: 192.168.99.241
+        - name: FTP_USER_PASS
+          valueFrom:
+            secretKeyRef:
+              name: ftp-user-pass
+              key: password
+        volumeMounts:
+        - name: ftp-persistent-storage
+          mountPath: "/vsftpd"
+      volumes:
+      - name: ftp-persistent-storage
+        persistentVolumeClaim:
+          claimName: ftp-pv-claim

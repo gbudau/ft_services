@@ -10,25 +10,31 @@ resources:
 secretGenerator:
 - name: mysql-pass
   literals:
-  - password=ROOT_PASSWORD
+  - password=CHANGE_ME
 - name: db-pass
   literals:
-  - dbpass=DB_PASS
+  - password=CHANGE_ME
 - name: pma-pass
   literals:
-  - pmapassword=PMA_PASS
+  - password=CHANGE_ME
 - name: wordpress-database-password
   literals:
-  - wpdbpass=WP_PASS
+  - password=CHANGE_ME
 - name: wordpress-admin-password
   literals:
-  - wpadminpass=WPADMIN_PASS
+  - password=CHANGE_ME
 - name: wordpress-editor-password
   literals:
-  - wpeditorpass=WPEDITOR_PASS
+  - password=CHANGE_ME
 - name: wordpress-author-password
   literals:
-  - wpauthorpass=WPAUTHOR_PASS
+  - password=CHANGE_ME
 - name: wordpress-contributor-password
   literals:
-  - wpcontributorpass=WPCONTRIBUTOR_PASS
+  - password=CHANGE_ME
+- name: ssh-user-password
+  literals:
+  - password=CHANGE_ME
+- name: ftp-user-pass
+  literals:
+  - password=CHANGE_ME

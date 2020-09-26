@@ -47,3 +47,11 @@ spec:
             - /healthcheck.sh
           initialDelaySeconds: 15
           periodSeconds: 5
+        env:
+        - name: SSH_USER
+          value: sshalpine
+        - name: SSH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ssh-user-password
+              key: password

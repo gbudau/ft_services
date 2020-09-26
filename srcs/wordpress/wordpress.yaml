@@ -65,7 +65,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: wordpress-database-password
-              key: wpdbpass
+              key: password
         - name: WORDPRESS_URL
           value: http://192.168.99.243:5050
         - name: WORDPRESS_SITE_TITLE
@@ -78,7 +78,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: wordpress-admin-password
-              key: wpadminpass
+              key: password
         - name: WORDPRESS_EDITOR
           value: editor
         - name: WORDPRESS_EDITOR_EMAIL
@@ -87,7 +87,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: wordpress-editor-password
-              key: wpeditorpass
+              key: password
         - name: WORDPRESS_AUTHOR
           value: author
         - name: WORDPRESS_AUTHOR_EMAIL
@@ -96,7 +96,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: wordpress-author-password
-              key: wpauthorpass
+              key: password
         - name: WORDPRESS_CONTRIBUTOR
           value: contributor
         - name: WORDPRESS_CONTRIBUTOR_EMAIL
@@ -105,7 +105,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: wordpress-contributor-password
-              key: wpcontributorpass
+              key: password
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
