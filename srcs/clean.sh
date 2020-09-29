@@ -13,6 +13,7 @@ docker rmi -f my-ftp:latest
 docker rmi -f my-mysql:latest
 docker rmi -f my-phpmyadmin:latest
 docker rmi -f my-wordpress:latest
+docker rmi -f my-influxdb:latest
 
 #minikube stop
 #minikube delete

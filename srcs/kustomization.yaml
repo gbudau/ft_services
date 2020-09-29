@@ -6,6 +6,7 @@ resources:
   - mysql/mysql.yaml
   - phpmyadmin/phpmyadmin.yaml
   - wordpress/wordpress.yaml
+  - influxdb/influxdb.yaml
 
 secretGenerator:
 - name: mysql-pass

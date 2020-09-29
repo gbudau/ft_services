@@ -16,6 +16,7 @@ docker build -t my-ftp srcs/ftp
 docker build -t my-mysql srcs/mysql
 docker build -t my-phpmyadmin srcs/phpmyadmin
 docker build -t my-wordpress srcs/wordpress
+docker build -t my-influxdb srcs/influxdb
 
 # Load configs
 kubectl apply -k srcs/
