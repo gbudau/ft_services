@@ -7,6 +7,7 @@ resources:
   - phpmyadmin/phpmyadmin.yaml
   - wordpress/wordpress.yaml
   - influxdb/influxdb.yaml
+  - grafana/grafana.yaml
 
 secretGenerator:
 - name: mysql-pass

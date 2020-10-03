@@ -6,7 +6,7 @@ metadata:
     app: wordpress
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.99.243
+  loadBalancerIP: 192.168.99.250
   ports:
     - port: 5050
       protocol: TCP
@@ -67,7 +67,7 @@ spec:
               name: wordpress-database-password
               key: password
         - name: WORDPRESS_URL
-          value: http://192.168.99.243:5050
+          value: http://192.168.99.250:5050
         - name: WORDPRESS_SITE_TITLE
           value: wordpress
         - name: WORDPRESS_ADMIN
