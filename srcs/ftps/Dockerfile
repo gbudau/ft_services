@@ -5,10 +5,9 @@ LABEL maintainer="gbudau"
 RUN apk add --update --no-cache vsftpd openssl
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt -subj '/CN=127.0.0.1'
 
-RUN mkdir -p /vsftpd/
+RUN mkdir -p /etc/vsftpd /vsftpd
 RUN chown -R ftp:ftp /vsftpd/
 
-COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY startup.sh /startup.sh
 RUN chmod u+x /startup.sh
 

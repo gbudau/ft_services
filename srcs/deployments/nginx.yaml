@@ -55,3 +55,22 @@ spec:
             secretKeyRef:
               name: ssh-user-password
               key: password
+        volumeMounts:
+        - mountPath: /etc/telegraf/telegraf.conf
+          name: telegraf-config-volume
+          subPath: telegraf.conf
+          readOnly: true
+        - mountPath: /etc/nginx/nginx.conf
+          name: nginx-config-volume
+          subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: telegraf-config-volume
+        configMap:
+          name: telegraf-config
+      - name: nginx-config-volume
+        configMap:
+          name: nginx-ssh-config
+          items:
+          - key: nginx-ssh.conf
+            path: nginx.conf

@@ -31,7 +31,7 @@ RUN apk add --update --no-cache libaio libnsl \
 
 COPY datasources.yaml /etc/grafana/provisioning/datasources/datasources.yaml
 COPY dashboards.yaml /etc/grafana/provisioning/dashboards/dashboards.yaml
-COPY ft_services.json /var/lib/grafana/dashboards/ft_services.json
+COPY telegraf-metrics.json /var/lib/grafana/dashboards/telegraf-metrics.json
 
 EXPOSE 3000
 

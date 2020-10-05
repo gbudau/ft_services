@@ -12,7 +12,7 @@ kubectl apply -f srcs/metallb/config.yaml
 # Build images
 eval $(minikube docker-env)
 docker build -t my-nginx srcs/nginx
-docker build -t my-ftp srcs/ftp
+docker build -t my-ftps srcs/ftps
 docker build -t my-mysql srcs/mysql
 docker build -t my-phpmyadmin srcs/phpmyadmin
 docker build -t my-wordpress srcs/wordpress
@@ -20,6 +20,7 @@ docker build -t my-influxdb srcs/influxdb
 docker build -t my-grafana srcs/grafana
 
 # Load configs
+kubectl apply -k srcs/config/
 kubectl apply -k srcs/
 
 # Activate dashboard

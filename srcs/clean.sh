@@ -9,7 +9,7 @@ kubectl delete -k "$DIR"
 
 
 docker rmi -f my-nginx:latest
-docker rmi -f my-ftp:latest
+docker rmi -f my-ftps:latest
 docker rmi -f my-mysql:latest
 docker rmi -f my-phpmyadmin:latest
 docker rmi -f my-wordpress:latest

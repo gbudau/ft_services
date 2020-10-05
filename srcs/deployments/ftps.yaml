@@ -1,53 +1,53 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ftp
+  name: ftps
 spec:
   type: LoadBalancer
   loadBalancerIP: 192.168.99.241
   ports:
   - port: 21
     protocol: TCP
-    name: ftp
+    name: ftps
   - port: 30020
     protocol: TCP
-    name: ftp-passive1
+    name: ftps-passive1
   - port: 30021
     protocol: TCP
-    name: ftp-passive2
+    name: ftps-passive2
   - port: 30022
     protocol: TCP
-    name: ftp-passive3
+    name: ftps-passive3
   - port: 30023
     protocol: TCP
-    name: ftp-passive4
+    name: ftps-passive4
   - port: 30024
     protocol: TCP
-    name: ftp-passive5
+    name: ftps-passive5
   - port: 30025
     protocol: TCP
-    name: ftp-passive6
+    name: ftps-passive6
   - port: 30026
     protocol: TCP
-    name: ftp-passive7
+    name: ftps-passive7
   - port: 30027
     protocol: TCP
-    name: ftp-passive8
+    name: ftps-passive8
   - port: 30028
     protocol: TCP
-    name: ftp-passive9
+    name: ftps-passive9
   - port: 30029
     protocol: TCP
-    name: ftp-passive10
+    name: ftps-passive10
   selector:
-      app: ftp
+      app: ftps
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ftp-pv-claim
+  name: ftps-pv-claim
   labels:
-    app: ftp
+    app: ftps
 spec:
   accessModes:
     - ReadWriteOnce
@@ -59,21 +59,21 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   labels:
-      app: ftp
-  name: ftp-deployment
+      app: ftps
+  name: ftps-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ftp
+      app: ftps
   template:
     metadata:
       labels:
-        app: ftp
+        app: ftps
     spec:
       containers:
-      - name: ftp
-        image: my-ftp
+      - name: ftps
+        image: my-ftps
         ports:
         - containerPort: 21
         - containerPort: 30020
@@ -88,19 +88,26 @@ spec:
         - containerPort: 30029
         imagePullPolicy: Never
         env:
-        - name: FTP_USER
-          value: alpineftp
-        - name: FTP_EXTERNAL_IP
+        - name: FTPS_USER
+          value: alpineftps
+        - name: FTPS_EXTERNAL_IP
           value: 192.168.99.241
-        - name: FTP_USER_PASS
+        - name: FTPS_USER_PASS
           valueFrom:
             secretKeyRef:
-              name: ftp-user-pass
+              name: ftps-user-pass
               key: password
         volumeMounts:
-        - name: ftp-persistent-storage
+        - name: ftps-persistent-storage
           mountPath: "/vsftpd"
+        - mountPath: /etc/vsftpd/vsftpd.conf
+          name: ftps-config-volume
+          subPath: vsftpd.conf
+          readOnly: true
       volumes:
-      - name: ftp-persistent-storage
+      - name: ftps-persistent-storage
         persistentVolumeClaim:
-          claimName: ftp-pv-claim
+          claimName: ftps-pv-claim
+      - name: ftps-config-volume
+        configMap:
+          name: ftps-config

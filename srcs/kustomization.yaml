@@ -1,14 +1,5 @@
-# kustomization.yaml
-
-resources:
-  - nginx/nginx.yaml
-  - ftp/ftp.yaml
-  - mysql/mysql.yaml
-  - phpmyadmin/phpmyadmin.yaml
-  - wordpress/wordpress.yaml
-  - influxdb/influxdb.yaml
-  - grafana/grafana.yaml
-
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 secretGenerator:
 - name: mysql-pass
   literals:
@@ -37,6 +28,15 @@ secretGenerator:
 - name: ssh-user-password
   literals:
   - password=CHANGE_ME
-- name: ftp-user-pass
+- name: ftps-user-pass
   literals:
   - password=CHANGE_ME
+
+resources:
+  - deployments/nginx.yaml
+  - deployments/ftps.yaml
+  - deployments/mysql.yaml
+  - deployments/phpmyadmin.yaml
+  - deployments/wordpress.yaml
+  - deployments/influxdb.yaml
+  - deployments/grafana.yaml
