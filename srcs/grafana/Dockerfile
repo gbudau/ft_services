@@ -29,10 +29,6 @@ RUN apk add --update --no-cache libaio libnsl \
  && cp /usr/share/grafana/conf/ldap.toml /etc/grafana/ldap.toml \
  && chown -R grafana:grafana /var/lib/grafana /var/log/grafana /etc/grafana/provisioning
 
-COPY datasources.yaml /etc/grafana/provisioning/datasources/datasources.yaml
-COPY dashboards.yaml /etc/grafana/provisioning/dashboards/dashboards.yaml
-COPY telegraf-metrics.json /var/lib/grafana/dashboards/telegraf-metrics.json
-
 EXPOSE 3000
 
 USER grafana

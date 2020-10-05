@@ -71,6 +71,7 @@ RUN wget -q https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyA
  && rm -rf tmp/*
  
 
+# Configure php
 RUN sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/php7/php-fpm.d/www.conf \
  && sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" /etc/php7/php-fpm.d/www.conf \
  && sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" /etc/php7/php-fpm.d/www.conf \
@@ -87,11 +88,9 @@ RUN sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/
  && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /etc/php7/php.ini
 
 
-COPY nginx.conf /etc/nginx/nginx.conf
 COPY startup.sh /startup.sh
 COPY healthcheck.sh /healthcheck.sh
-RUN chmod u+x /startup.sh \
- && chmod u+x /healthcheck.sh
+RUN chmod u+x /startup.sh /healthcheck.sh
 
 # Ports that needs to be exposed
 EXPOSE 5000

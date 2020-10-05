@@ -40,3 +40,26 @@ spec:
         ports:
         - containerPort: 3000
           name: grafana
+        volumeMounts:
+        - mountPath: /etc/grafana/provisioning/datasources/datasources.yaml
+          name: datasources-provisioning-volume
+          subPath: datasources.yaml
+          readOnly: true
+        - mountPath: /etc/grafana/provisioning/dashboards/dashboards.yaml
+          name: dashboards-provisioning-volume
+          subPath: dashboards.yaml
+          readOnly: true
+        - mountPath: /var/lib/grafana/dashboards/dashboards-metadata.json
+          name: dashboards-metadata-volume
+          subPath: dashboards-metadata.json
+          readOnly: true
+      volumes:
+      - name: datasources-provisioning-volume
+        configMap:
+          name: datasources-provisioning
+      - name: dashboards-provisioning-volume
+        configMap:
+          name: dashboards-provisioning
+      - name: dashboards-metadata-volume
+        configMap:
+          name: dashboards-metadata

@@ -61,14 +61,14 @@ spec:
           subPath: telegraf.conf
           readOnly: true
         - mountPath: /etc/nginx/nginx.conf
-          name: nginx-config-volume
+          name: nginx-ssh-config-volume
           subPath: nginx.conf
           readOnly: true
       volumes:
       - name: telegraf-config-volume
         configMap:
           name: telegraf-config
-      - name: nginx-config-volume
+      - name: nginx-ssh-config-volume
         configMap:
           name: nginx-ssh-config
           items:

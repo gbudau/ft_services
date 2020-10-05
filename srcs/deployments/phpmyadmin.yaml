@@ -52,3 +52,15 @@ spec:
             - /healthcheck.sh
           initialDelaySeconds: 15
           periodSeconds: 5
+        volumeMounts:
+        - mountPath: /etc/nginx/nginx.conf
+          name: nginx-pma-config-volume
+          subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: nginx-pma-config-volume
+        configMap:
+          name: nginx-pma-config
+          items:
+          - key: nginx-pma.conf
+            path: nginx.conf

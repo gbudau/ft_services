@@ -7,11 +7,29 @@ configMapGenerator:
 - name: nginx-ssh-config
   files:
   - nginx-ssh.conf
+- name: nginx-pma-config
+  files:
+  - nginx-pma.conf
+- name: nginx-wp-config
+  files:
+  - nginx-wp.conf
 - name: ftps-config
   files:
   - vsftpd.conf
 - name: influxdb-config
   files:
   - influxdb.conf
+- name: dashboards-provisioning
+  files:
+  - dashboards.yaml
+- name: datasources-provisioning
+  files:
+  - datasources.yaml
+- name: dashboards-metadata
+  files:
+  - dashboards-metadata.json
+- name: mysql-config
+  files:
+  - mysql.conf
 generatorOptions:
   disableNameSuffixHash: true

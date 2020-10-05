@@ -118,7 +118,17 @@ spec:
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: "/www/wp-content"
+        - mountPath: /etc/nginx/nginx.conf
+          name: nginx-wp-config-volume
+          subPath: nginx.conf
+          readOnly: true
       volumes:
       - name: wordpress-persistent-storage
         persistentVolumeClaim:
           claimName: wp-pv-claim
+      - name: nginx-wp-config-volume
+        configMap:
+          name: nginx-wp-config
+          items:
+          - key: nginx-wp.conf
+            path: nginx.conf
