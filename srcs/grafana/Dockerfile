@@ -1,6 +1,7 @@
 FROM alpine:3.12
 
 LABEL mantainer="gbudau"
+LABEL docker.group="grafana"
 
 RUN addgroup -S grafana && adduser -S grafana -G grafana
 

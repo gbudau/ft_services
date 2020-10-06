@@ -15,6 +15,7 @@ docker rmi -f my-phpmyadmin:latest
 docker rmi -f my-wordpress:latest
 docker rmi -f my-influxdb:latest
 docker rmi -f my-grafana:latest
+docker rmi -f my-telegraf:latest
 
 #minikube stop
 #minikube delete

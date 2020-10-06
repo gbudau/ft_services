@@ -1,7 +1,8 @@
 FROM alpine:3.12
 
 LABEL mantainer="gbudau"
-ENV INFLUXDB_VERSION="1.8.2"
+LABEL docker.group="influxdb"
+ARG INFLUXDB_VERSION="1.8.2"
 
 RUN wget https://dl.influxdata.com/influxdb/releases/influxdb-${INFLUXDB_VERSION}-static_linux_amd64.tar.gz \
  && mkdir -p /usr/src /etc/influxdb \

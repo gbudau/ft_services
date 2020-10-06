@@ -48,6 +48,8 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 5
         env:
+        - name: WEB_PAGE
+          value: https://www.42madrid.com/
         - name: SSH_USER
           value: sshalpine
         - name: SSH_PASSWORD
@@ -56,18 +58,11 @@ spec:
               name: ssh-user-password
               key: password
         volumeMounts:
-        - mountPath: /etc/telegraf/telegraf.conf
-          name: telegraf-config-volume
-          subPath: telegraf.conf
-          readOnly: true
         - mountPath: /etc/nginx/nginx.conf
           name: nginx-ssh-config-volume
           subPath: nginx.conf
           readOnly: true
       volumes:
-      - name: telegraf-config-volume
-        configMap:
-          name: telegraf-config
       - name: nginx-ssh-config-volume
         configMap:
           name: nginx-ssh-config

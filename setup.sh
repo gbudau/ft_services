@@ -18,6 +18,7 @@ docker build -t my-phpmyadmin srcs/phpmyadmin
 docker build -t my-wordpress srcs/wordpress
 docker build -t my-influxdb srcs/influxdb
 docker build -t my-grafana srcs/grafana
+docker build -t my-telegraf srcs/telegraf
 
 # Load configs
 kubectl apply -k srcs/config/

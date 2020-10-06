@@ -40,3 +40,4 @@ resources:
   - deployments/wordpress.yaml
   - deployments/influxdb.yaml
   - deployments/grafana.yaml
+  - deployments/telegraf.yaml

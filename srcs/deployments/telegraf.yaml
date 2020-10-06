@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf
+spec:
+  selector:
+    matchLabels:
+      app: telegraf
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+      - image: my-telegraf
+        name: telegraf
+        imagePullPolicy: Never
+        volumeMounts:
+        - mountPath: /etc/telegraf/telegraf.conf
+          name: telegraf-config-volume
+          subPath: telegraf.conf
+          readOnly: true
+        - mountPath: /var/run/docker.sock
+          name: docker-sock-volume
+      volumes:
+      - name: telegraf-config-volume
+        configMap:
+          name: telegraf-config
+      - name: docker-sock-volume
+        hostPath:
+          path: /var/run/docker.sock

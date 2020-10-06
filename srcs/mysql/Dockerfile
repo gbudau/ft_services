@@ -1,6 +1,7 @@
 FROM alpine:3.12
 
 LABEL maintainer="gbudau"
+LABEL docker.group="mysql"
 
 RUN addgroup -S mysql && adduser -S -G mysql mysql
 RUN apk add --update --no-cache  mysql mysql-client
