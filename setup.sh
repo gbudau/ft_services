@@ -1,28 +1,34 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Start minikube
-#minikube start --driver=virtualbox
+echo "✨  Starting Minikube"
+minikube start --driver=virtualbox
 
-# Install metallb
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
-kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-kubectl apply -f srcs/metallb/config.yaml
+# Create secretkey for MetalLB
+DIR=`dirname "$0"`
+openssl rand -base64 128 > "$DIR/srcs/metallb/configs/secretkey" > /dev/null 2>&1
 
-# Build images
+# Use Minikube's built-in Docker daemon
 eval $(minikube docker-env)
-docker build -t my-nginx srcs/nginx
-docker build -t my-ftps srcs/ftps
-docker build -t my-mysql srcs/mysql
-docker build -t my-phpmyadmin srcs/phpmyadmin
-docker build -t my-wordpress srcs/wordpress
-docker build -t my-influxdb srcs/influxdb
-docker build -t my-grafana srcs/grafana
-docker build -t my-telegraf srcs/telegraf
 
-# Load configs
-kubectl apply -k srcs/config/
-kubectl apply -k srcs/
+# Build Docker Images
+services=(nginx ftps mysql phpmyadmin wordpress influxdb grafana telegraf)
+for service in "${services[@]}"; do
+	echo "🐳  Building Docker Image for ${service^}"
+	docker build -t "my-$service" "$DIR/srcs/$service" > /dev/null 2>&1
+done
 
-# Activate dashboard
-#minikube dashboard
+# Load Kubernetes Objects
+echo "⚖️   Installing MetalLB"
+kubectl apply -k "$DIR"/srcs/metallb/ > /dev/null 2>&1
+echo "📋  Creating ConfigMaps"
+kubectl apply -k "$DIR"/srcs/config/ > /dev/null 2>&1
+echo "⛵  Creating Deployments"
+kubectl apply -k "$DIR"/srcs/ > /dev/null 2>&1
+
+# Delete MetalLB secretkey
+rm -f "$DIR/srcs/metallb/configs/secretkey" > /dev/null 2>&1
+
+# Activate the dashboard
+echo "📊  Activating Minikube Dashboard"
+minikube dashboard

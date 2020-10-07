@@ -6,6 +6,7 @@ metadata:
     app: phpmyadmin
 spec:
   type: LoadBalancer
+  loadBalancerIP: 192.168.99.243
   ports:
     - port: 5000
       protocol: TCP
@@ -17,7 +18,7 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: phpmyadmin
+  name: phpmyadmin-deployment
   labels:
     app: phpmyadmin
 spec:

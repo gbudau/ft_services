@@ -27,6 +27,7 @@ RUN apk add --update --no-cache libaio libnsl \
  && sed -i 's|;mode = console file|mode = console|i' /etc/grafana/grafana.ini \
  && sed -i 's|;data = /var/lib/grafana|data = /var/lib/grafana|i' /etc/grafana/grafana.ini \
  && sed -i 's|;plugins = /var/lib/grafana/plugins|plugins = /var/lib/grafana/plugins|i' /etc/grafana/grafana.ini \
+ && ln -sf /var/lib/grafana/dashboards/dashboards-metadata.json /usr/share/grafana/public/dashboards/home.json \
  && cp /usr/share/grafana/conf/ldap.toml /etc/grafana/ldap.toml \
  && chown -R grafana:grafana /var/lib/grafana /var/log/grafana /etc/grafana/provisioning
 

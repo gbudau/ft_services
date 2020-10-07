@@ -4,7 +4,7 @@ metadata:
   name: ftps
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.99.241
+  loadBalancerIP: 192.168.99.240
   ports:
   - port: 21
     protocol: TCP
@@ -91,7 +91,7 @@ spec:
         - name: FTPS_USER
           value: alpineftps
         - name: FTPS_EXTERNAL_IP
-          value: 192.168.99.241
+          value: 192.168.99.240
         - name: FTPS_USER_PASS
           valueFrom:
             secretKeyRef:

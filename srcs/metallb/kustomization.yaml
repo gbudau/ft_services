@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: metallb-system
+
+resources:
+- metallb.yaml
+- namespace.yaml
+
+configMapGenerator:
+- name: config
+  files:
+    - configs/config
+
+secretGenerator:
+- name: memberlist
+  files:
+    - configs/secretkey
+
+generatorOptions:
+ disableNameSuffixHash: true
