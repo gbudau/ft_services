@@ -2,7 +2,7 @@
 
 # Start minikube
 echo "✨  Starting Minikube"
-minikube start --driver=virtualbox
+minikube start --driver=virtualbox --disk-size=5000mb
 
 # Create secretkey for MetalLB
 DIR=`dirname "$0"`
@@ -14,7 +14,8 @@ eval $(minikube docker-env)
 # Build Docker Images
 services=(nginx ftps mysql phpmyadmin wordpress influxdb grafana telegraf)
 for service in "${services[@]}"; do
-	echo "🐳  Building Docker Image for ${service^}"
+	title="$(tr '[:lower:]' '[:upper:]' <<< ${service:0:1})${service:1}"
+	echo "🐳  Building Docker Image for ${title}"
 	docker build -t "my-$service" "$DIR/srcs/$service" > /dev/null 2>&1
 done
 
