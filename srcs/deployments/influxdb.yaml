@@ -54,7 +54,7 @@ spec:
         volumeMounts:
         - name: influxdb-persistent-storage
           mountPath: /var/lib/influxdb
-        - mountPath: /etc/influxdb/vsftpd.conf
+        - mountPath: /etc/influxdb/influxdb.conf
           name: influxdb-config-volume
           subPath: influxdb.conf
           readOnly: true

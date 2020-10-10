@@ -50,9 +50,12 @@ spec:
           periodSeconds: 5
         env:
         - name: WEB_PAGE
-          value: https://www.42madrid.com/
+          value: https://www.42madrid.com
         - name: SSH_USER
-          value: sshalpine
+          valueFrom:
+            secretKeyRef:
+              name: ssh-user
+              key: user
         - name: SSH_PASSWORD
           valueFrom:
             secretKeyRef:

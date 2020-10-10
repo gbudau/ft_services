@@ -69,7 +69,7 @@ spec:
         - name: WORDPRESS_URL
           value: http://192.168.99.244:5050
         - name: WORDPRESS_SITE_TITLE
-          value: wordpress
+          value: ft_services
         - name: WORDPRESS_ADMIN
           value: admin
         - name: WORDPRESS_ADMIN_EMAIL

@@ -88,10 +88,13 @@ spec:
         - containerPort: 30029
         imagePullPolicy: Never
         env:
-        - name: FTPS_USER
-          value: alpineftps
         - name: FTPS_EXTERNAL_IP
           value: 192.168.99.240
+        - name: FTPS_USER
+          valueFrom:
+            secretKeyRef:
+              name: ftps-user
+              key: user
         - name: FTPS_USER_PASS
           valueFrom:
             secretKeyRef:

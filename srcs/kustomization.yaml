@@ -3,34 +3,40 @@ kind: Kustomization
 secretGenerator:
 - name: mysql-pass
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: db-pass
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: pma-pass
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: wordpress-database-password
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: wordpress-admin-password
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: wordpress-editor-password
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: wordpress-author-password
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 - name: wordpress-contributor-password
   literals:
-  - password=CHANGE_ME
+  - password=changeme
+- name: ssh-user
+  literals:
+  - user=ssh
 - name: ssh-user-password
   literals:
-  - password=CHANGE_ME
+  - password=changeme
+- name: ftps-user
+  literals:
+  - user=ftps
 - name: ftps-user-pass
   literals:
-  - password=CHANGE_ME
+  - password=changeme
 
 resources:
   - deployments/nginx.yaml
