@@ -63,7 +63,7 @@ RUN wget -q https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyA
  && tar xzf tmp/phpMyAdmin-${PHPMYADMIN_VERSION}-english.tar.gz -C tmp \
  && mv tmp/phpMyAdmin-${PHPMYADMIN_VERSION}-english/ /usr/share/phpmyadmin \
  && mkdir -p /var/lib/phpmyadmin/tmp \
- && chown -R www:www /var/lib/phpmyadmin \
+ && chown nobody:nobody /var/lib/phpmyadmin/tmp \
  && randomBlowfishSecret=$(openssl rand -base64 32) \
  && sed -e "s|cfg\['blowfish_secret'\] = ''|cfg['blowfish_secret'] = '$randomBlowfishSecret'|" -e '/controluser/,/End/ s/^\/\///g' /usr/share/phpmyadmin/config.sample.inc.php > /usr/share/phpmyadmin/config.inc.php \
  && sed -i "s/localhost/mysql/" /usr/share/phpmyadmin/config.inc.php \
